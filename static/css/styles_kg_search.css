@@ -1,0 +1,91 @@
+.query-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 50vh;
+}
+
+.query-title {
+    margin-bottom: 10px;
+    font-size: 36px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.main-content form {
+    position: relative;
+    display: flex;
+    width: 500px;
+}
+
+.main-content #query-input {
+    flex: 1;
+    height: 50px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px 4px 4px 4px;
+    font-size: 18px;
+}
+
+.main-content #query-button {
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 10px 20px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+    height: 50px;
+    width: 120px;
+    font-size: 18px;
+}
+
+.main-content #query-button:hover {
+    background-color: #0056b3;
+}
+
+/* 消息容器样式 */
+#message-container {
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #f5c6cb;
+    background-color: #f8d7da;
+    color: #721c24;
+    display: none; /* 默认隐藏，动态显示 */
+}
+
+/* 结果容器样式 */
+#result-container {
+    margin-top: 20px;
+}
+
+/* 卡片样式 */
+.result-card {
+    padding: 15px;
+    border: 1px solid #e3e3e3;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: calc(33.333% - 10px);
+    box-sizing: border-box;
+}
+
+.result-card p {
+    margin: 0;
+    font-size: 14px;
+    color: #333;
+}
+
+/* 无结果时的提示 */
+#result-container .empty-state {
+    text-align: center;
+    padding: 20px;
+    color: #6c757d;
+    background-color: #f9f9f9;
+    border: 1px dashed #ccc;
+    border-radius: 8px;
+}
