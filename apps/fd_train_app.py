@@ -107,7 +107,7 @@ def predict_pytorch(params, fd_model, predict_button, data_analyze_button):
     # Title
     # ------------------------
     user_name = "test"
-    st.title("Fault Diagnosis")
+    st.title("故障诊断")
     # ------------------------
     # get params config
     # ------------------------

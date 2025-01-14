@@ -17,7 +17,7 @@
         <div class="form-box">
             <form action="{{ url_for('user.register') }}" method="post" class="register-box hidden">
                 <!-- 注册 -->
-                <h1>register</h1>
+                <h1>制造大数据分析引擎</h1>
                 <input type="text" placeholder="用户名" name="username">
                 <input type="email" placeholder="邮箱" name="email">
                 <div style="width: 70%;vertical-align: middle">
@@ -31,7 +31,7 @@
 
             <!-- 登录 -->
             <form action="{{ url_for('user.login') }}" method="post" class="login-box">
-                <h1>login</h1>
+                <h1>制造大数据分析引擎</h1>
                 <input type="text" placeholder="用户名" name="username" value="{{ username }}">
                 {% if form %}
                     <p class="text-danger">{{ form.username.errors[0] }}</p>
@@ -42,12 +42,12 @@
                 {% endif %}
                 <div class="checkbox">
                     <input type="checkbox" id="remember" name="remember">
-                    <label for="remember" style="color: #fff;font-size: 18px;float: left">Remember me</label>
+                    <label for="remember" style="color: #fff;font-size: 18px;float: left">记住秘密</label>
                 </div>
 
                 <button class="btn1">登录</button>
                 <div class="forget-con">
-                    <a href="#" id="forget">Forgot Username / Password?</a>
+                    {# <a href="#" id="forget">忘记用户名/密码?</a> #}
                 </div>
 
             </form>
@@ -56,7 +56,7 @@
             {#            <h2>欢迎来到<span>宠物之家</span></h2>#}
             {#            <p>快来领取你的专属<span>宠物</span>吧</p>#}
             <img src="{{ url_for('static', filename='base/img/logotext-brain.png') }}" alt="">
-            <p>已有账号</p>
+            <p>已有账号！</p>
             <button id="login" class="btn1">去登录</button>
         </div>
         <div class="con-box right">
