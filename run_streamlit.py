@@ -40,3 +40,4 @@ os.system(
     # + "streamlit run apps/rul_app.py --server.port 9001 --server.fileWatcherType none &"
     )
 
+# test
