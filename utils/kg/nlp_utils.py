@@ -104,5 +104,6 @@ def process_question_with_sliding_window(question):
     entity = entities[0]  # 假设只取第一个匹配实体
     relation = relations[0]  # 假设只取第一个匹配关系
     cypher_query = f"MATCH (m:{entity})-[r:{relation}]->(n) RETURN n.name"
-    return cypher_query
+    cypher_query_vs = f"MATCH (m:{entity})-[r:{relation}]->(n) RETURN m,r,n"
+    return [cypher_query,cypher_query_vs]
 

@@ -1,11 +1,30 @@
-{% extends "templates_kg/base.html" %}
-
-{% block styles %}
-    {{ super() }} <!-- 调用父模板（base.html）的styles块内容，确保base的样式能被引入 -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles_kg_search.css') }}">
+{% extends "templates_kg/base.html" %}{% block styles %}{{ super() }} 
+<link 
+  rel="stylesheet" 
+  href="{{ url_for('static', filename='css/styles_kg_search.css') }}"
+/>
 {% endblock %}
 
-{% block content %}{{ super() }}
+{% block content %}
+    {{ super() }}
+
+    
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">您的位置</li>
+        <li class="breadcrumb-item active">
+          <a href='{{url_for('dashboard.dashboard_application')}}'>
+          应用程序
+          </a>
+        </li>
+        <li class="breadcrumb-item active"> 
+          <a href='{{url_for('dashboard.dashboard_kg')}}'>
+          知识图谱
+          </a>
+        </li>
+        <li class="breadcrumb-item active">查询</li>
+    </ol>
+
+
     <!-- 查询表单 -->
     <div class="query-container">
         <div class="query-title">知识图谱查询</div>
@@ -22,21 +41,17 @@
 
     <!-- 结果容器 -->
     <div id="result-container" style="margin-top: 20px;">
-        {% if results %}
-            <div style="display: flex; flex-wrap: wrap; gap: 10px;">
-                {% for record in results %}
-                    <div class="result-card" style="padding: 15px; border: 1px solid #e3e3e3; border-radius: 8px; background-color: #f9f9f9; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); width: calc(33.333% - 10px); box-sizing: border-box;">
-                        <p style="margin: 0; font-size: 14px; color: #333;">{{ record }}</p>
-                    </div>
-                {% endfor %}
-            </div>
-        {% else %}
-            <div style="text-align: center; padding: 20px; color: #6c757d; background-color: #f9f9f9; border: 1px dashed #ccc; border-radius: 8px;">
-                暂无查询结果
-            </div>
-        {% endif %}
-      </div>z
+        <div id="query-result"></div>  <!-- 显示文本查询结果 -->
+        <div id="neo4j-graph" style="width: 100%; height: 500px; display: none;"></div>  <!-- 显示图形化查询结果 -->
+    </div>
+
+    <script src="{{ url_for('static', filename='js/neovis.js') }}"></script>
 
     <!-- 动态注入查询URL -->
     <script>const queryUrl = "{{ url_for('search.kg_search') }}";</script>
+
+   
+    <script src="{{ url_for('static', filename='js/kg/kg_search.js') }}"></script>
+   
+
 {% endblock %}

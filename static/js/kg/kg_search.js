@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', function () {
-    // 发送查询请求的函数
     async function sendQueryRequest(queryText) {
         const formData = new FormData();
         formData.append('query_text', queryText);
@@ -18,8 +17,27 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    // 使用 Neovis.js 渲染图形
+    function renderGraph(cypherQuery) {
+        const graphContainer = document.getElementById('neo4j-graph');
+        graphContainer.style.display = 'block'; // 显示图形容器
+
+        const config = {
+            containerId: "neo4j-graph",
+            neo4j: {
+                serverUrl: "bolt://localhost:7687", // Neo4j 连接
+                serverUser: "neo4j",               // 用户名
+                serverPassword: "3080neo4j"        // 密码
+            },
+            initialCypher: cypherQuery  // Cypher 查询语句
+        };
+
+        const viz = new NeoVis.default(config);
+        viz.render();
+    }
+
     function submitQuery(event) {
-        event.preventDefault();  // 阻止表单的默认提交
+        event.preventDefault();
         const queryText = document.getElementById('query-input').value;
 
         if (queryText) {
@@ -28,23 +46,36 @@ document.addEventListener('DOMContentLoaded', function () {
             queryButton.textContent = '查询中...';
 
             sendQueryRequest(queryText)
-            .then(data => {
-                queryButton.disabled = false;
-                queryButton.textContent = '查询';
+                .then(data => {
+                    queryButton.disabled = false;
+                    queryButton.textContent = '查询';
 
-                if (data.message) {
-                    document.getElementById('message-container').textContent = data.message;
-                }
-                if (data.results) {
-                    const resultContainer = document.getElementById('result-container');
-                    resultContainer.innerHTML = ''; // 清空结果
-                    data.results.forEach(record => {
-                        const p = document.createElement('p');
-                        p.textContent = record;
-                        resultContainer.appendChild(p);
-                    });
-                }
-            });
+                    const resultContainer = document.getElementById('query-result');
+                    resultContainer.innerHTML = ''; // 清空文本结果
+
+                    const graphContainer = document.getElementById('neo4j-graph');
+                    graphContainer.style.display = 'none'; // 隐藏图形容器
+
+                    if (data.message) {
+                        document.getElementById('message-container').textContent = data.message;
+                    }
+
+                    if (data.results) {
+                        const results = data.results.join(', ');
+                        const queryElement = document.createElement('p');
+                        queryElement.textContent = `${data.query}: ${results}`;
+                        resultContainer.appendChild(queryElement);
+                    }
+
+                    if (data.cypher_query_vs) {
+                        renderGraph(data.cypher_query_vs); // 渲染图形
+                    }
+                })
+                .catch(error => {
+                    queryButton.disabled = false;
+                    queryButton.textContent = '查询';
+                    console.error('查询处理错误:', error);
+                });
         } else {
             alert('请输入有效的查询内容');
         }
@@ -56,11 +87,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
+
+
+
 function showMessage(message) {
   const messageContainer = document.getElementById('message-container');
   messageContainer.textContent = message;
   messageContainer.style.display = 'block';
-}
+    }
 
 function hideMessage() {
   const messageContainer = document.getElementById('message-container');

@@ -6,7 +6,7 @@ from neo4j import GraphDatabase
 from utils.kg.nlp_utils import process_question_with_sliding_window
 
 # Neo4j相关配置信息，根据实际路径修改
-NEO4J_INSTALL_PATH = "/home/zhanggu/MyDoc/AMySystem-zhanggu/neo4j"
+NEO4J_INSTALL_PATH = "/home/zhanggu/MyDoc/purehtml/neo4j"
 NEO4J_BIN_PATH = os.path.join(NEO4J_INSTALL_PATH, "bin")
 # 启动Neo4j服务的命令，指定完整路径及参数
 NEO4J_START_COMMAND = [os.path.join(NEO4J_BIN_PATH, "neo4j"), "start"]
@@ -67,7 +67,8 @@ def start_neo4j():
 
 def perform_query(query_text):
     """执行查询并返回结果，整合了转换和执行的流程"""
-    cypher_query = process_question_with_sliding_window(query_text)
+    converted_query = process_question_with_sliding_window(query_text)
+    cypher_query=converted_query[0]
     if not cypher_query:
         logger.error(f"无法将查询文本 {query_text} 转换为Cypher查询语句")
         return None
