@@ -16,36 +16,36 @@ def get_streamlit_params():
     params = collections.defaultdict(int)
 
     # Choose the DL Library
-    library = st.sidebar.selectbox(label="框架", options=["PyTorch", "TensorFlow"], help="choose you library")
+    library = st.sidebar.selectbox(label="Library", options=["PyTorch", "TensorFlow"], help="choose you library")
     params["library"] = library
 
     # Choose the Device 
     if library == "PyTorch":
         available_gpus = ["cpu"] + ["cuda:" + str(i) for i in range(torch.cuda.device_count())]
-        device = st.sidebar.selectbox(label="设备", options=available_gpus)
+        device = st.sidebar.selectbox(label="Device", options=available_gpus)
         params["device"] = device
 
         # Choose the model
         models_path = pathlib.Path("")
         models_name = pathlib.Path(f"./user_data/test/models").rglob("*.pth")  # list models
-        model = st.sidebar.selectbox(label="模型", options=[n.stem for n in models_name])
+        model = st.sidebar.selectbox(label="Model", options=[n.stem for n in models_name])
         params["model"] = model
 
         # Choose the View Structure
-        view_structure = st.sidebar.checkbox(label="网络结构可视化", value=False)
+        view_structure = st.sidebar.checkbox(label="View Structure", value=False)
         params["view_structure"] = view_structure
 
         # Choose the dataset
         datasets_name = pathlib.Path(f"./user_data/test/datasets/image").iterdir()
-        dataset = st.sidebar.selectbox(label="数据集", options=[n.stem for n in datasets_name if n.is_dir()])
+        dataset = st.sidebar.selectbox(label="Dataset", options=[n.stem for n in datasets_name if n.is_dir()])
         params["dataset"] = dataset
 
         # Choose the image_size
-        img_resize = int(st.sidebar.number_input(label="图像尺寸", min_value=0, max_value=256, step=1, value=224))
+        img_resize = int(st.sidebar.number_input(label="Image Resize", min_value=0, max_value=256, step=1, value=224))
         params["img_resize"] = img_resize
 
         # Choose the batch_size
-        batch_size = st.sidebar.slider(label="批量大小", min_value=1, max_value=256, value=4, step=1)
+        batch_size = st.sidebar.slider(label="Batch Size", min_value=1, max_value=256, value=4, step=1)
         params["bs"] = batch_size
 
     if library == "TensorFlow":
@@ -59,7 +59,7 @@ def predict_pytorch(params, predict_button):
     # Title
     # ------------------------
     user_name = "test"
-    st.title("缺陷分类")
+    st.title("Defect Classification")
 
     # ------------------------
     # get params config
@@ -124,12 +124,12 @@ def predict_pytorch(params, predict_button):
         PD = PredictDataset(user_name=user_name, dataset_name=dataset_name, model=model, default_cfg=default_cfg)
         transform = PD.tranforms() # data process
         predict_dataset, predict_iter = PD.create_dataloader_iterator(mode="test", batch_size=batch_size, trans=transform, shuffle=False, drop_last=False)
-        st.subheader("数据集加载完毕!!!")
+        st.subheader("Data Load Success!!")
 
         # 2.predict
         loss_fn = torch.nn.CrossEntropyLoss()
         demo = Predicter(model, dataset_name, predict_dataset, predict_iter, device, loss_fn)
-        st.subheader("预测开始")
+        st.subheader("Start Predicting")
         demo.predict()
 
 

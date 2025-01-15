@@ -90,18 +90,17 @@ def dashboard_ic():
         "templates_ic/dashboard.html",
         zh=zh_json["Dashboard"]
     )
-    
-@bp.route("/da", methods=["GET", "POST"])
+
+@bp.route("/ds", methods=["GET", "POST"])
 @login_required
-def dashboard_da():
+def dashboard_ds():
     # username = session["user"]
     with open("language/text-zh.json", "r", encoding="utf-8") as f:
         zh_json = json.load(f)
     return render_template(
-        "templates_da/dashboard.html",
+        "templates_ds/dashboard.html",
         zh=zh_json["Dashboard"]
     )
-
 # test 
 # @bp.route("/test", methods=["GET", "POST"])
 # @login_required

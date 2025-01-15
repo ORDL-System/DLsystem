@@ -52,14 +52,15 @@
           <input class="btn" type="button" value="查看更多" onclick='ic()'/>
         </div>
       </div>
+
+
       <div class="card_combine">
         <div class="content_combine">
-          <h2>数据增强</h2>
+          <h2>数据存储</h2>
           <p></p>
-          <input class="btn" type="button" value="查看更多" onclick='da()'/>
+          <input class="btn" type="button" value="查看更多" onclick='ds()'/>
         </div>
       </div>
-
       <!-- test -->
       <!--
       <div class="card_combine">
@@ -96,10 +97,9 @@
     window.location.href = "{{url_for('dashboard.dashboard_ic')}}";
   }
 
-  function da() {
-    window.location.href = "{{url_for('dashboard.dashboard_da')}}";
+  function ds() {
+    window.location.href = "{{url_for('dashboard.dashboard_ds')}}";
   }
-
 </script>
 
 

@@ -1,4 +1,4 @@
-{% extends "templates_da/base.html" %} {% import 'bootstrap/wtf.html' as wtf %}
+{% extends "templates_ds/base.html" %} {% import 'bootstrap/wtf.html' as wtf %}
 {% block styles %} {{ super() }}
 <link
   href="{{ url_for('static', filename='base/css/tables.css') }}"
@@ -63,8 +63,8 @@
     </a>
   </li>
   <li class="breadcrumb-item active"> 
-    <a href='{{url_for('dashboard.dashboard_da')}}'>
-    数据增强
+    <a href='{{url_for('dashboard.dashboard_ds')}}'>
+    数据存储1
     </a>
   </li>
 </ol>
