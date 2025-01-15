@@ -11,3 +11,4 @@ from .application import bp as application_bp
 from .models import bp as models_bp
 from .data_preprocessing import bp as data_preprocessing_bp
 from .image_capture import bp as image_capture_bp
+from .data_augmentation import bp as data_augmentation_bp

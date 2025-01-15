@@ -33,6 +33,10 @@ def models_storage_det():
 def models_storage_fd():
     return render_template("templates_fd/models_storage.html")
 
+@bp.route("/da")
+def models_storage_da():
+    return render_template("templates_da/models_storage.html")
+
 @bp.route("/quote_model", methods=["POST"])
 def quote_model():
     quote_name = request.form.to_dict()["quote_name"]

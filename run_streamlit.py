@@ -32,7 +32,10 @@ os.system(
     "streamlit run apps/fd_preprocessing_app.py --server.port 8802 --server.fileWatcherType none &" +
     "streamlit run apps/fd_train_app.py --server.port 8803 --server.fileWatcherType none &" +
     # 图像采集
-    "streamlit run apps/image_capture_app.py --server.port 8901 --server.fileWatcherType none &"
+    "streamlit run apps/image_capture_app.py --server.port 8901 --server.fileWatcherType none &" + 
+    # 数据增强
+    "streamlit run apps/da_train_app.py --server.port 9001 --server.fileWatcherType none &" + 
+    "streamlit run apps/da_aug_app.py --server.port 9002 --server.fileWatcherType none &"
     # RUl
     # + "streamlit run apps/rul_app.py --server.port 9001 --server.fileWatcherType none &"
     )

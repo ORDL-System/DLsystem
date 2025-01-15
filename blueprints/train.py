@@ -20,3 +20,7 @@ def tensorboard_cls():
 @bp.route("/train_fd", methods=["GET", "POST"])
 def train_fd():
     return render_template("templates_fd/train.html")
+
+@bp.route("/train_da", methods=["GET", "POST"])
+def train_da():
+    return render_template("templates_da/train.html")

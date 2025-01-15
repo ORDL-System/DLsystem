@@ -52,6 +52,13 @@
           <input class="btn" type="button" value="查看更多" onclick='ic()'/>
         </div>
       </div>
+      <div class="card_combine">
+        <div class="content_combine">
+          <h2>数据增强</h2>
+          <p></p>
+          <input class="btn" type="button" value="查看更多" onclick='da()'/>
+        </div>
+      </div>
 
       <!-- test -->
       <!--
@@ -87,6 +94,10 @@
 
   function ic() {
     window.location.href = "{{url_for('dashboard.dashboard_ic')}}";
+  }
+
+  function da() {
+    window.location.href = "{{url_for('dashboard.dashboard_da')}}";
   }
 
 </script>
