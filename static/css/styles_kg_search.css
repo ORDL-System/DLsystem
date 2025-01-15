@@ -58,34 +58,12 @@
     display: none; /* 默认隐藏，动态显示 */
 }
 
-/* 结果容器样式 */
-#result-container {
-    margin-top: 20px;
+#query-result {
+    font-size: 25px; /* 设置字体大小，可根据需要调整 */
+    line-height:18 1.6; /* 增加行间距以提高可读性 */
 }
 
-/* 卡片样式 */
-.result-card {
-    padding: 15px;
-    border: 1px solid #e3e3e3;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    width: calc(33.333% - 10px);
-    box-sizing: border-box;
-}
-
-.result-card p {
-    margin: 0;
-    font-size: 14px;
-    color: #333;
-}
-
-/* 无结果时的提示 */
-#result-container .empty-state {
-    text-align: center;
-    padding: 20px;
-    color: #6c757d;
-    background-color: #f9f9f9;
-    border: 1px dashed #ccc;
-    border-radius: 8px;
+.query-text {
+    font-weight: bold; /* 加粗显示用户输入的查询 */
+    color: #333; /* 可选：设置颜色 */
 }

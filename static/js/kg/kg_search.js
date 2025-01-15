@@ -18,23 +18,42 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // 使用 Neovis.js 渲染图形
-    function renderGraph(cypherQuery) {
+    function renderGraph(cypherQuery, queryResults) {
         const graphContainer = document.getElementById('neo4j-graph');
         graphContainer.style.display = 'block'; // 显示图形容器
-
+    
+        // 动态生成 labels 配置
+        const labelsConfig = {};
+        queryResults.nodes.forEach(node => {
+            if (!labelsConfig[node.label]) {
+                labelsConfig[node.label] = { label: "name" }; // 假设所有节点都有 'name' 属性
+            }
+        });
+    
+        // 动态生成 relationships 配置
+        const relationshipsConfig = {};
+        queryResults.relationships.forEach(rel => {
+            if (!relationshipsConfig[rel.type]) {
+                relationshipsConfig[rel.type] = { label: false }; // 不显示关系文本
+            }
+        });
+    
         const config = {
             containerId: "neo4j-graph",
             neo4j: {
-                serverUrl: "bolt://localhost:7687", // Neo4j 连接
-                serverUser: "neo4j",               // 用户名
-                serverPassword: "3080neo4j"        // 密码
+                serverUrl: "bolt://localhost:7687",
+                serverUser: "neo4j",
+                serverPassword: "3080neo4j"
             },
-            initialCypher: cypherQuery  // Cypher 查询语句
+            labels: labelsConfig,
+            relationships: relationshipsConfig,
+            initialCypher: cypherQuery // 动态 Cypher 查询
         };
-
+    
         const viz = new NeoVis.default(config);
         viz.render();
     }
+    
 
     function submitQuery(event) {
         event.preventDefault();
@@ -62,13 +81,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
                     if (data.results) {
                         const results = data.results.join(', ');
+                    
+                        // 创建用于显示用户输入的查询的元素
                         const queryElement = document.createElement('p');
-                        queryElement.textContent = `${data.query}: ${results}`;
+                        queryElement.innerHTML = `<span class="query-text">${data.query}</span>: ${results}`;
+                        
                         resultContainer.appendChild(queryElement);
                     }
+                    
 
                     if (data.cypher_query_vs) {
-                        renderGraph(data.cypher_query_vs); // 渲染图形
+                        renderGraph(data.cypher_query_vs,data.queryResults); // 渲染图形
                     }
                 })
                 .catch(error => {
