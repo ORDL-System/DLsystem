@@ -110,6 +110,26 @@
 
           <li class="" id="sb-train">
             <!-- an example of nested submenu. basic bootstrap collapse component -->
+            <a href="{{ url_for('data_augmentation.cls_aug') }}">
+              <span class="icon">
+                <i class="fi flaticon-chip"></i>
+              </span>
+              图像增强
+            </a>
+          </li>
+
+          <li class="" id="sb-train">
+            <!-- an example of nested submenu. basic bootstrap collapse component -->
+            <a href="{{ url_for('data_filter.cls_filter') }}">
+              <span class="icon">
+                <i class="fi flaticon-flask"></i>
+              </span>
+              增强样本筛选
+            </a>
+          </li>
+
+          <li class="" id="sb-train">
+            <!-- an example of nested submenu. basic bootstrap collapse component -->
             <a href="{{ url_for('train_orgin.run_cls') }}">
               <span class="icon">
                 <i class="fi flaticon-settings-train"></i>

@@ -16,7 +16,7 @@ def get_streamlit_params():
     params = collections.defaultdict(int)
 
     # Choose the DL Library
-    library = st.sidebar.selectbox(label="框架", options=["PyTorch", "TensorFlow"], help="choose you library")
+    library = st.sidebar.selectbox(label="深度学习框架", options=["PyTorch", "TensorFlow"])
     params["library"] = library
 
     # Choose the Device 
@@ -25,20 +25,20 @@ def get_streamlit_params():
         device = st.sidebar.selectbox(label="设备", options=available_gpus)
         params["device"] = device
 
+        # Choose the dataset
+        datasets_name = pathlib.Path(f"./user_data/test/cls_datasets/image").iterdir()
+        dataset = st.sidebar.selectbox(label="数据集", options=[n.stem for n in datasets_name if n.is_dir()])
+        params["dataset"] = dataset
+        
         # Choose the model
         models_path = pathlib.Path("")
-        models_name = pathlib.Path(f"./user_data/test/models").rglob("*.pth")  # list models
-        model = st.sidebar.selectbox(label="模型", options=[n.stem for n in models_name])
-        params["model"] = model
+        models_name = pathlib.Path(f"./user_data/test/cls_models").rglob("*.pth")  # list models
+        model = st.sidebar.selectbox(label="模型", options=['_'.join(n.stem.split('_')[0:-1]) for n in models_name if n.stem.split('_')[-1] == dataset.lower()])
+        params["model"] = f"{model}_{dataset.lower()}"
 
         # Choose the View Structure
         view_structure = st.sidebar.checkbox(label="网络结构可视化", value=False)
         params["view_structure"] = view_structure
-
-        # Choose the dataset
-        datasets_name = pathlib.Path(f"./user_data/test/datasets/image").iterdir()
-        dataset = st.sidebar.selectbox(label="数据集", options=[n.stem for n in datasets_name if n.is_dir()])
-        params["dataset"] = dataset
 
         # Choose the image_size
         img_resize = int(st.sidebar.number_input(label="图像尺寸", min_value=0, max_value=256, step=1, value=224))
@@ -76,7 +76,7 @@ def predict_pytorch(params, predict_button):
     # ------------------------
     # TODO 区分tensorflow和PyTorch
     # TODO 加入username变量
-    checkpoint = torch.load(f"./user_data/test/models/{model}.pth")
+    checkpoint = torch.load(f"./user_data/test/cls_models/{model}.pth")
     # print(type(checkpoint), isinstance(checkpoint, torch.nn.Module))
 
     if isinstance(checkpoint, torch.nn.Module):

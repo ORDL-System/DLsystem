@@ -21,8 +21,10 @@ import os
 os.system(
     "streamlit run apps/upload_image_app.py --server.port 8500 --server.fileWatcherType none &" +
     # 缺陷分类
-    "streamlit run apps/cls_train_app.py --server.port 8501 --server.fileWatcherType none &" +
-    "streamlit run apps/cls_predict_app.py --server.port 8502 --server.fileWatcherType none &" +
+    "streamlit run apps/cls_dataaug_app.py --server.port 8501 --server.fileWatcherType none &" +
+    "streamlit run apps/cls_filter_app.py --server.port 8502 --server.fileWatcherType none &" +
+    "streamlit run apps/cls_train_app.py --server.port 8503 --server.fileWatcherType none &" +
+    "streamlit run apps/cls_predict_app.py --server.port 8504 --server.fileWatcherType none &" +
     # 缺陷分割
     "streamlit run apps/seg_predict_app.py --server.port 8602 --server.fileWatcherType none &" +
     # 缺陷检测

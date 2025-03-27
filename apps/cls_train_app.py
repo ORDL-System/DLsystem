@@ -1,3 +1,4 @@
+import os
 import pathlib
 from matplotlib.style import library
 import streamlit as st
@@ -29,7 +30,7 @@ def get_streamlit_params():
     params = collections.defaultdict(int)
 
     # Choose the DL Library
-    library = st.sidebar.selectbox(label="框架", options=["PyTorch", "TensorFlow"], help="choose you library")
+    library = st.sidebar.selectbox(label="深度学习框架", options=["PyTorch", "TensorFlow"])
     params["library"] = library
 
     # Choose the Device 
@@ -38,20 +39,20 @@ def get_streamlit_params():
         device = st.sidebar.selectbox(label="设备", options=available_gpus)
         params["device"] = device
 
+        # Choose the dataset
+        datasets_name = pathlib.Path(f"./user_data/test/cls_datasets/image").iterdir()
+        dataset = st.sidebar.selectbox(label="数据集", options=[n.stem for n in datasets_name if n.is_dir()])
+        params["dataset"] = dataset
+        
         # Choose the model
         models_path = pathlib.Path("")
-        models_name = pathlib.Path(f"./user_data/test/models").rglob("*.pth")  # list models
-        model = st.sidebar.selectbox(label="模型", options=[n.stem for n in models_name])
-        params["model"] = model
+        models_name = pathlib.Path(f"./user_data/test/cls_models").rglob("*.pth")  # list models
+        model = st.sidebar.selectbox(label="模型", options=['_'.join(n.stem.split('_')[0:-1]) for n in models_name if n.stem.split('_')[-1] == dataset.lower()])
+        params["model"] = f"{model}_{dataset.lower()}"
 
         # Choose the View Structure
         view_structure = st.sidebar.checkbox(label="网络结构可视化", value=False)
         params["view_structure"] = view_structure
-
-        # Choose the dataset
-        datasets_name = pathlib.Path(f"./user_data/test/datasets/image").iterdir()
-        dataset = st.sidebar.selectbox(label="数据集", options=[n.stem for n in datasets_name if n.is_dir()])
-        params["dataset"] = dataset
 
         # Choose the split ratio
         train_scale = st.sidebar.slider(label="训练集比例", min_value=0.0, max_value=1.0, value=0.8, step=0.01)
@@ -68,7 +69,7 @@ def get_streamlit_params():
         params["lr"] = learning_rate * 1e-4
 
         # Choose the batch_size
-        batch_size = st.sidebar.slider(label="批量大小", min_value=1, max_value=256, value=4, step=1)
+        batch_size = st.sidebar.slider(label="批量大小", min_value=1, max_value=256, value=128, step=1)
         params["bs"] = batch_size
 
         # Choose the epochs
@@ -107,7 +108,7 @@ def train_pytorch(params, train_button, stop_button):
     # ------------------------
     # TODO 区分tensorflow和PyTorch
     # TODO 加入username变量
-    model = torch.load(f"./user_data/test/models/{model}.pth", map_location=torch.device(device=device))
+    model = torch.load(f"./user_data/test/cls_models/{model}.pth", map_location=torch.device(device=device))
 
     # ------------------------
     # visualize model
@@ -144,7 +145,7 @@ def train_pytorch(params, train_button, stop_button):
         st.subheader("训练开始")
         demo.train()
         st.subheader("训练完成")
-
+ 
     # TODO : 结束训练
     if stop_button:
         pass
@@ -160,6 +161,7 @@ def main():
 
     train_button = st.sidebar.button(label="开始训练")
     stop_button = st.sidebar.button(label="结束训练")
+    save_button = st.sidebar.button(label="保存模型")
 
     if library == "PyTorch":
         train_pytorch(params, train_button, stop_button)
