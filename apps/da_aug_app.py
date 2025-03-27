@@ -115,6 +115,7 @@ def main():
     
     start_button = st.sidebar.button(label="开始生成")
     stop_button = st.sidebar.button(label="停止生成")
+    save_button = st.sidebar.button(label="保存数据")
     
     if library == "PyTorch":
         train_pytorch(params, start_button, stop_button)
